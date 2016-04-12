@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>React Hello World</title>
+		<link rel="stylesheet" type="text/css" href="./main.css">
+
+		<script type="text/javascript" src="./react.js"></script>
+		<script type="text/javascript" src="./react-dom.js"></script>
+		<script type="text/javascript" src="./JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="app"></div>
+
+		<script type="text/jsx">
+			var Header = React.createClass({
+				getDefaultProps: function () {
+					console.log('Header: getDefaultProps');
+					return {
+						username: '小红'
+					};
+				},
+				getInitialState: function () {
+					console.log('Header: getInitialState');
+					return {
+						systemName: 'React平台Header'
+					};
+				},
+				render: function () {
+					console.log('Header: render');
+					console.log(this.props.username);
+			        var welcomeMsg;
+			        if (this.props.username) {
+			            welcomeMsg = '欢迎，' + this.props.username + '！'
+			        };
+					return (
+			                <div className="header-content">
+			                    <h1>{this.state.systemName}</h1>
+			                    {
+			                        welcomeMsg ? (
+			                        <div className="user-wrap">
+			                            <span ref="welcomeDesc" className="welcome-user">{welcomeMsg}</span>
+			                        </div>
+			                        ) : null
+			                    }
+			                </div>
+						);
+				},
+				componentWillMount: function () {
+					console.log('Header: componentWillMount');
+				},
+				componentDidMount: function () {
+					console.log('Header: componentDidMount');
+					console.log(this.refs.welcomeDesc.innerText);
+				},
+				componentWillReceiveProps: function () {
+					console.log('Header: componentWillRecevieProps');
+					console.log(this.props.username);
+				},
+				shouldComponentUpdate: function () {
+					console.log('Header: shouldComponentUpdate');
+					console.log(this.props.username);
+					return true;
+				},
+				componentWillUpdate: function () {
+					console.log('Header: componentWillUpdate');
+					console.log(this.props.username);
+				},
+				componentDidUpdate: function () {
+					console.log('Header: componentDidUpdate');
+				},
+				componentWillUnmount: function () {
+					console.log('Header: componentWillUnmount');
+				}
+			});
+
+
+			var Footer = React.createClass({
+				getDefaultProps: function () {
+					console.log('Footer: getDefaultProps');
+					return {
+						username: '小红'
+					};
+				},
+				getInitialState: function () {
+					return {
+						systemName: 'React平台Footer'
+					};
+				},
+				render: function () {
+					console.log('Footer: render');
+					console.log(this.props.username);
+			        var welcomeMsg;
+			        if (this.props.username) {
+			            welcomeMsg = '欢迎，' + this.props.username + '！'
+			        };
+					return (
+			                <div className="footer-content">
+			                    <h1>{this.state.systemName}</h1>
+			                    {
+			                        welcomeMsg ? (
+			                        <div className="user-wrap">
+			                            <span ref="welcomeDesc" className="welcome-user">{welcomeMsg}</span>
+			                        </div>
+			                        ) : null
+			                    }
+			                </div>
+						);
+				},
+				componentWillMount: function () {
+					console.log('Footer: componentWillMount');
+				},
+				componentDidMount: function () {
+					console.log('Footer: componentDidMount');
+					console.log(this.refs.welcomeDesc.innerText);
+				},
+				componentWillReceiveProps: function () {
+					console.log('Footer: componentWillRecevieProps');
+					console.log(this.props.username);
+				},
+				shouldComponentUpdate: function () {
+					console.log('Footer: shouldComponentUpdate');
+					console.log(this.props.username);
+					return true;
+				},
+				componentWillUpdate: function () {
+					console.log('Footer: componentWillUpdate');
+					console.log(this.props.username);
+				},
+				componentDidUpdate: function () {
+					console.log('Footer: componentDidUpdate');
+				},
+				componentWillUnmount: function () {
+					console.warn('Footer: componentWillUnmount');
+				}
+			});
+
+			var App = React.createClass({
+				getDefaultProps: function () {
+					console.log('App: getDefaultProps');
+					return {};
+				},
+				getInitialState: function () {
+					console.log('App: getInitialState');
+					return {
+						username: '小明',
+						unmount: false,
+						useless: true
+					};
+				},
+				render: function () {
+					console.log('App: render');
+					var fontStyle = {
+						fontSize: '16px',
+						fontWeight: 'bold'
+					}
+					// return <div><h1>{this.state.title}</h1></div>;
+					return (
+							<div>
+								<Header ref="header" username={this.state.username} />
+
+								<br/>
+							    <h3>登陆用户：{this.state.username}</h3>
+						        <div className="common-button" onClick={this.clickChangeUserHlr}>Change User</div>
+						        <br/>
+						        <div className="common-button" onClick={this.clickChangeFailedHlr}>Change Failed</div>
+						        <br/>
+						        <div className="common-button" onClick={this.clickChangeUselessHlr}>Change Useless</div>
+						        <br/>
+
+								{this.state.unmount ? false : <Footer />}
+						        <br/>
+						        <div className="common-button" onClick={this.clickUnmountHlr}>Unmount</div>
+						        <br/>
+					        </div>
+						);
+				},
+				clickChangeUserHlr: function (event) {
+					this.setState({username: '小李'}); // 延迟更新value
+					this.setState({username: '小王'}); // 延迟更新value
+				},
+				clickChangeFailedHlr: function (event) {
+					this.state.username = '小张'; // 立即更新value
+					// this.forceUpdate(); // 强制更新，慎用
+				},
+				clickChangeUselessHlr: function (event) {
+					this.setState({useless: false}); // just v-dom, not native-dom
+				},
+				clickUnmountHlr: function (event) {
+					this.replaceState({unmount: true});
+				},
+				componentWillMount: function () {
+					console.log('App: componentWillMount');
+				},
+				componentDidMount: function () {
+					console.log('App: componentDidMount');
+					var self = this;
+					setInterval(function () {
+						self.setState({username: '小A'});
+						self.setState({username: '小B'});
+					}, 2000);
+				},
+				componentWillUpdate: function () {
+					console.log('App: componentWillUpdate');
+					console.log(this.state.username);
+				},
+				componentDidUpdate: function () {
+					console.log('App: componentDidUpdate');
+					console.log(this.refs.header);
+				}
+			});
+
+			ReactDOM.render(<App />, document.getElementById('app'));
+		</script>
+	</body>
+</html>

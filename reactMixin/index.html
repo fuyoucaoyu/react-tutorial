@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>React Hello World</title>
+		<link rel="stylesheet" type="text/css" href="./main.css">
+
+		<script type="text/javascript" src="./react.js"></script>
+		<script type="text/javascript" src="./react-dom.js"></script>
+		<script type="text/javascript" src="./JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="app"></div>
+
+		<script type="text/jsx">
+			var userMixin = {
+				getDefaultProps: function () {
+					return {
+						username: '小红'
+					};
+				},
+				renderUser: function (welcomeMsg) {
+					return (
+	                        <div className="user-wrap">
+	                            <span ref="welcomeDesc" className="welcome-user">{welcomeMsg}</span>
+	                        </div>
+						);
+				},
+				componentDidMount: function () {
+					console.log('mount');
+				}
+			}
+
+			var Header = React.createClass({
+				mixins: [userMixin],
+				getInitialState: function () {
+					return {
+						systemName: 'React平台Header'
+					};
+				},
+				render: function () {
+			        var welcomeMsg;
+			        if (this.props.username) {
+			            welcomeMsg = '欢迎，' + this.props.username + '！'
+			        };
+					return (
+			                <div className="header-content">
+			                    <h1>{this.state.systemName}</h1>
+			                    {
+			                        welcomeMsg ? this.renderUser(welcomeMsg) : null
+			                    }
+			                </div>
+						);
+				}
+			});
+
+
+			var Footer = React.createClass({
+				mixins: [userMixin],
+				getInitialState: function () {
+					return {
+						systemName: 'React平台Footer'
+					};
+				},
+				render: function () {
+			        var welcomeMsg;
+			        if (this.props.username) {
+			            welcomeMsg = '欢迎，' + this.props.username + '！'
+			        };
+					return (
+			                <div className="footer-content">
+			                    <h1>{this.state.systemName}</h1>
+			                    {
+			                        welcomeMsg ? this.renderUser(welcomeMsg) : null
+			                    }
+			                </div>
+						);
+				}
+			});
+
+			var App = React.createClass({
+				getInitialState: function () {
+					return {
+						username: '小明',
+						unmount: false
+					};
+				},
+				render: function () {
+					var fontStyle = {
+						fontSize: '16px',
+						fontWeight: 'bold'
+					}
+					return (
+							<div>
+								<Header ref="header" username={this.state.username} />
+
+								<br/>
+							    <h3>登陆用户：{this.state.username}</h3>
+						        <div className="common-button" onClick={this.clickChangeUserHlr}>Change User</div>
+						        <br/>
+						        <div className="common-button" onClick={this.clickChangeFailedHlr}>Change Failed</div>
+						        <br/>
+
+								{this.state.unmount ? false : <Footer />}
+						        <br/>
+						        <div className="common-button" onClick={this.clickUnmountHlr}>Unmount</div>
+						        <br/>
+					        </div>
+						);
+				},
+				clickChangeUserHlr: function (event) {
+					this.setState({username: '小李'});
+				},
+				clickChangeFailedHlr: function (event) {
+					this.state.username = '小张';
+				},
+				clickUnmountHlr: function (event) {
+					this.replaceState({unmount: true});
+				}
+			});
+
+			ReactDOM.render(<App />, document.getElementById('app'));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>React Hello World</title>
+	</head>
+	<body>
+		<div id="app"></div>
+
+		<script type="text/javascript">
+                  function h1 (text, style) {
+                  	var result;
+                  	var styleStr;
+
+                  	if (style) {
+                  		styleStr = 'style="';
+      	            	for (var name in style) {
+      	            		styleStr += name + ':' + style[name] + ';'; 
+      	            	}
+      	            	styleStr += '"';
+                  	}
+
+                  	if (styleStr) {
+                  		result = '<h1 ' + styleStr + '>' + text + '</h1>';
+                  	} else {
+                  		result = '<h1>' + text + '</h1>';
+                  	}
+
+                      return result;
+                  }
+
+                  function render(target, container) {
+                  	container.innerHTML = target;
+                  }
+
+                  render(h1('Hello World!', {color: '#00f'}), document.getElementById('app'));
+		</script>
+	</body>
+</html>

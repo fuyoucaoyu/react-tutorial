@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>React Hello World</title>
+		<link rel="stylesheet" type="text/css" href="./main.css">
+
+		<script type="text/javascript" src="./react.js"></script>
+		<script type="text/javascript" src="./JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="app"></div>
+
+		<script type="text/jsx">
+			var Header = React.createClass({
+				getInitialState: function () {
+					return {
+						systemName: 'React平台'
+					};
+				},
+				render: function () {
+			        var welcomeMsg;
+			        if (this.props.username) {
+			            welcomeMsg = '欢迎，' + this.props.username + '！'
+			        };
+					return (
+			                <div className="header-content">
+			                    <h1>{this.state.systemName}</h1>
+			                    {
+			                        welcomeMsg ? (
+			                        <div className="user-wrap">
+			                            <span className="welcome-user">{welcomeMsg}</span>
+			                        </div>
+			                        ) : null
+			                    }
+			                </div>
+						);
+				}
+			});
+
+			var Content = React.createClass({
+				getInitialState: function () {
+					return {
+
+					};
+				},
+				render: function () {
+					return (
+							<form>
+							    <label htmlFor="male">Male</label>
+							    <input type="radio" name="sex" id="male" />
+							    <label htmlFor="female">Female</label>
+							    <input type="radio" name="sex" id="female" />
+							</form>
+						);
+				}
+			});
+
+			var App = React.createClass({
+				getInitialState: function () {
+					return {
+						title: 'Hello World!',
+						isLogin: true
+					};
+				},
+				render: function () {
+					var fontStyle = {
+						fontSize: '16px',
+						fontWeight: 'bold'
+					}
+					// return <div><h1>{this.state.title}</h1></div>;
+					return (
+							<div>
+								<Header username={this.getLoginUsername()} />
+							    <h1 style={fontStyle}>{this.state.title}</h1>
+							    <h3>登陆用户：{this.state.isLogin && '小明'}</h3>
+						        <div className="common-button" onClick={this.clickHandler}>Change Title</div>
+
+						        <Content />
+					        </div>
+						);
+				},
+				clickHandler: function (event) {
+					this.setState({title: 'new title'});
+				},
+				getLoginUsername: function () {
+					return '小明';
+					// return null;
+				}
+			});
+
+			React.render(<App />, document.getElementById('app'));
+		</script>
+	</body>
+</html>

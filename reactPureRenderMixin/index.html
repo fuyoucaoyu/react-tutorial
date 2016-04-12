@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>React Hello World</title>
+		<link rel="stylesheet" type="text/css" href="./main.css">
+
+		<script type="text/javascript" src="./react-with-addons.js"></script>
+		<script type="text/javascript" src="./react-dom.js"></script>
+		<script type="text/javascript" src="./JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="app"></div>
+
+		<script type="text/jsx">
+			var Header = React.createClass({
+				getDefaultProps: function () {
+					return {
+						username: '小红'
+					};
+				},
+				getInitialState: function () {
+					return {
+						systemName: 'React平台Header'
+					};
+				},
+				render: function () {
+					console.log('Header: render');
+			        var welcomeMsg;
+			        if (this.props.username) {
+			            welcomeMsg = '欢迎，' + this.props.username + '！'
+			        };
+					return (
+			                <div className="header-content">
+			                    <h1>{this.state.systemName}</h1>
+			                    {
+			                        welcomeMsg ? this.renderUser(welcomeMsg) : null
+			                    }
+			                </div>
+						);
+				},
+				renderUser: function (welcomeMsg) {
+					return (
+	                        <div className="user-wrap">
+	                            <span ref="welcomeDesc" className="welcome-user">{welcomeMsg}</span>
+	                        </div>
+						);
+				},
+			});
+
+			var PureRenderMixin = React.addons.PureRenderMixin;
+			var App = React.createClass({
+				mixins: [PureRenderMixin],
+				getInitialState: function () {
+					return {
+						username: '小明',
+						complexObj: {name: '小张',
+									 family: {
+									 	 member: 3,
+										 parent: {
+										     father: {
+										     	  name: 'zhang',
+										     	  age: 50
+										     },
+										     godfather: [
+										     	  {
+											     	  name: 'wang',
+											     	  age: 51
+										     	  },
+										     	  {
+											     	  name: 'li',
+											     	  age: 52
+										     	  }
+
+										     ]
+										 }									 	
+									 }
+								}
+					};
+				},
+				render: function () {
+					console.log('App: render');
+					return (
+							<div>
+								<Header ref="header" username={this.state.username} />
+
+								<br/>
+							    <h3>登陆用户：{this.state.username}</h3>
+						        <div className="common-button" onClick={this.clickChangeUserHlr}>Change User</div>
+						        <br/>
+							    <label htmlFor="time">时间：</label>
+							    <input type='text' id="time" value={new Date().getTime()} />
+
+							    <br/>
+							    <label htmlFor="age">年龄：</label>
+							    <span id="age">{this.state.complexObj.family.parent.godfather[1].age}</span>
+					        </div>
+						);
+				},
+				clickChangeUserHlr: function (event) {
+					var newAge = this.state.complexObj.family.parent.godfather[1].age + 1;
+					var complexObj = {
+									name: '小张',
+									family: {
+									 	 member: 3,
+										 parent: {
+										     father: {
+										     	  name: 'zhang',
+										     	  age: 50
+										     },
+										     godfather: [
+										     	  {
+											     	  name: 'wang',
+											     	  age: 51
+										     	  },
+										     	  {
+											     	  name: 'li',
+											     	  age: newAge
+										     	  }
+
+										     ]
+										 }									 	
+									 }
+								};
+					;
+					// this.setState({username: '小李', complexObj: complexObj});
+					this.setState({username: '小李'});
+				},
+				componentWillUpdate: function () {
+				}
+			});
+
+			ReactDOM.render(<App />, document.getElementById('app'));
+		</script>
+	</body>
+</html>
