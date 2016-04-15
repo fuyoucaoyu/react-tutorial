@@ -40,7 +40,6 @@ module.exports = {
     },
     // 我们可以在plugin参数中配置我们需要用到的各种各样的插件。
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.NoErrorsPlugin()
     ]
 }

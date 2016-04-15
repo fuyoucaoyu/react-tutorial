@@ -10,7 +10,7 @@ var Header = require('../components/header/header');
 var App = React.createClass({
     getInitialState: function () {
         return {
-            username: '小张'
+            username: '小张!'
         };
     },
     render: function () {
@@ -18,7 +18,7 @@ var App = React.createClass({
             <div className="main">
                 <Header username={this.state.username} />
                 <div className="content-wrap">
-                    <h1>Hellow Webpack!!</h1>
+                    <h1>Hellow Webpack!</h1>
                 </div>
             </div>
         );

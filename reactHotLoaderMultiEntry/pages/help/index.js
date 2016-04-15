@@ -18,7 +18,7 @@ var App = React.createClass({
             <div className="main">
                 <Header username={this.state.username} />
                 <div className="content-wrap">
-                    <h1>Helper - Entry!!</h1>
+                    <h1>Helper - Entry</h1>
                     <a href="../main/index.html">main</a>
                 </div>
             </div>

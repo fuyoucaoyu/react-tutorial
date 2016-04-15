@@ -11,7 +11,7 @@ var Header = React.createClass({
     render: function () {
         var welcomeMsg;
         if (this.props.username) {
-            welcomeMsg = '欢迎，' + this.props.username + '！'
+            welcomeMsg = '欢迎，' + this.props.username + '!';
         };
         return (
                 <div className="header-content">
